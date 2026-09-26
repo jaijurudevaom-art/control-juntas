@@ -1,0 +1,155 @@
+:root {
+  --verde: #1e8449;
+  --verde-oscuro: #145a32;
+  --gris-bg: #f4f6f5;
+  --gris-borde: #d8dedb;
+  --texto: #1c2b23;
+  font-family: 'Segoe UI', system-ui, -apple-system, Arial, sans-serif;
+  color-scheme: light;
+}
+
+* { box-sizing: border-box; }
+
+html, body, #root {
+  margin: 0;
+  min-height: 100vh;
+  background: var(--gris-bg);
+  color: var(--texto);
+}
+
+a { color: inherit; }
+
+.app-shell {
+  display: flex;
+  min-height: 100vh;
+}
+
+.sidebar {
+  width: 230px;
+  background: var(--verde-oscuro);
+  color: white;
+  padding: 20px 14px;
+  flex-shrink: 0;
+}
+.sidebar h1 {
+  font-size: 17px;
+  margin: 0 0 24px;
+  line-height: 1.3;
+}
+.sidebar nav a {
+  display: block;
+  padding: 10px 12px;
+  border-radius: 8px;
+  text-decoration: none;
+  color: #dff0e6;
+  margin-bottom: 4px;
+  font-size: 14px;
+}
+.sidebar nav a.active, .sidebar nav a:hover {
+  background: rgba(255,255,255,0.14);
+  color: white;
+}
+.sidebar .logout {
+  margin-top: 30px;
+  font-size: 13px;
+  opacity: 0.75;
+  cursor: pointer;
+  background: none;
+  border: none;
+  color: white;
+  padding: 0;
+}
+
+.main-content {
+  flex: 1;
+  padding: 28px 36px;
+  max-width: 1100px;
+}
+
+h2 { margin-top: 0; }
+
+.card {
+  background: white;
+  border: 1px solid var(--gris-borde);
+  border-radius: 10px;
+  padding: 20px;
+  margin-bottom: 18px;
+}
+
+.btn {
+  background: var(--verde);
+  color: white;
+  border: none;
+  padding: 9px 16px;
+  border-radius: 7px;
+  font-size: 14px;
+  cursor: pointer;
+}
+.btn:hover { background: var(--verde-oscuro); }
+.btn.secondary {
+  background: white;
+  color: var(--verde);
+  border: 1px solid var(--verde);
+}
+.btn.secondary:hover { background: #eaf3ec; }
+.btn.danger { background: #c0392b; }
+.btn:disabled { opacity: 0.5; cursor: not-allowed; }
+
+input, select, textarea {
+  font-family: inherit;
+  font-size: 14px;
+  padding: 8px 10px;
+  border: 1px solid var(--gris-borde);
+  border-radius: 6px;
+  width: 100%;
+}
+label { font-size: 13px; font-weight: 600; margin-bottom: 4px; display: block; color: #375243; }
+.field { margin-bottom: 14px; }
+.row { display: flex; gap: 14px; }
+.row > .field { flex: 1; }
+
+table { width: 100%; border-collapse: collapse; font-size: 14px; }
+th, td { padding: 8px 10px; text-align: left; border-bottom: 1px solid var(--gris-borde); }
+th { color: #375243; font-size: 12px; text-transform: uppercase; letter-spacing: .03em; }
+
+.badge {
+  display: inline-block;
+  padding: 2px 9px;
+  border-radius: 20px;
+  font-size: 12px;
+  font-weight: 600;
+}
+.badge.ordinaria { background: #e7f3ea; color: var(--verde-oscuro); }
+.badge.extraordinaria { background: #fdeee0; color: #a85a13; }
+.badge.borrador { background: #eee; color: #666; }
+.badge.convocada { background: #e0eefd; color: #1a5a9e; }
+.badge.celebrada { background: #e7f3ea; color: var(--verde-oscuro); }
+
+.tabs { display: flex; gap: 6px; margin-bottom: 18px; border-bottom: 1px solid var(--gris-borde); }
+.tabs button {
+  background: none; border: none; padding: 10px 16px; cursor: pointer;
+  font-size: 14px; color: #667; border-bottom: 2px solid transparent;
+}
+.tabs button.active { color: var(--verde-oscuro); border-color: var(--verde); font-weight: 600; }
+
+.link-btn { background: none; border: none; color: var(--verde-oscuro); cursor: pointer; padding: 0; font-size: 13px; text-decoration: underline; }
+.muted { color: #778; font-size: 13px; }
+.empty { color: #99a; font-style: italic; padding: 14px 0; }
+
+.acuerdo-item {
+  border: 1px solid var(--gris-borde);
+  border-left: 4px solid var(--verde);
+  border-radius: 6px;
+  padding: 12px 14px;
+  margin-bottom: 10px;
+  background: #fafdfb;
+}
+.acuerdo-item.retirado { border-left-color: #c0392b; opacity: 0.8; }
+.acuerdo-item .num { font-weight: 700; color: var(--verde-oscuro); margin-right: 6px; }
+
+.search-hit { padding: 12px 0; border-bottom: 1px solid var(--gris-borde); }
+.search-hit .num-completo { font-weight: 700; color: var(--verde-oscuro); }
+
+.top-actions { display: flex; justify-content: space-between; align-items: center; margin-bottom: 18px; }
+
+.error-msg { color: #c0392b; font-size: 13px; margin-top: 6px; }
