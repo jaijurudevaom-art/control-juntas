@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react'
 import { supabase } from '../lib/supabaseClient'
 
-const empty = { nombre: '', cargo: '', representacion: '', notas: '' }
+const empty = { nombre: '', cargo: '', representacion: '', telefono: '', correo: '', notas: '' }
 
 export default function Integrantes() {
   const [lista, setLista] = useState([])
@@ -31,11 +31,13 @@ export default function Integrantes() {
     e.preventDefault()
     if (editando === 'nuevo') {
       await supabase.from('jg_integrantes').insert({
-        nombre: form.nombre, cargo: form.cargo, representacion: form.representacion, notas: form.notas,
+        nombre: form.nombre, cargo: form.cargo, representacion: form.representacion,
+        telefono: form.telefono, correo: form.correo, notas: form.notas,
       })
     } else {
       await supabase.from('jg_integrantes').update({
-        nombre: form.nombre, cargo: form.cargo, representacion: form.representacion, notas: form.notas,
+        nombre: form.nombre, cargo: form.cargo, representacion: form.representacion,
+        telefono: form.telefono, correo: form.correo, notas: form.notas,
       }).eq('id', editando)
     }
     setEditando(null)
@@ -68,6 +70,16 @@ export default function Integrantes() {
             <label>Representación (como aparece en convocatoria/acta)</label>
             <input value={form.representacion || ''} onChange={(e) => setForm({ ...form, representacion: e.target.value })} />
           </div>
+          <div className="row">
+            <div className="field">
+              <label>Teléfono</label>
+              <input type="tel" value={form.telefono || ''} onChange={(e) => setForm({ ...form, telefono: e.target.value })} placeholder="844 000 0000" />
+            </div>
+            <div className="field">
+              <label>Correo</label>
+              <input type="email" value={form.correo || ''} onChange={(e) => setForm({ ...form, correo: e.target.value })} placeholder="nombre@ismmtec.gob.mx" />
+            </div>
+          </div>
           <div className="field">
             <label>Notas</label>
             <textarea rows={2} value={form.notas || ''} onChange={(e) => setForm({ ...form, notas: e.target.value })} />
@@ -85,7 +97,7 @@ export default function Integrantes() {
         ) : (
           <table>
             <thead>
-              <tr><th>Nombre</th><th>Cargo</th><th>Representación</th><th></th><th></th></tr>
+              <tr><th>Nombre</th><th>Cargo</th><th>Representación</th><th>Teléfono</th><th>Correo</th><th></th><th></th></tr>
             </thead>
             <tbody>
               {lista.map((i) => (
@@ -93,6 +105,8 @@ export default function Integrantes() {
                   <td>{i.nombre}</td>
                   <td className="muted">{i.cargo}</td>
                   <td className="muted">{i.representacion}</td>
+                  <td className="muted">{i.telefono}</td>
+                  <td className="muted">{i.correo}</td>
                   <td><button className="link-btn" onClick={() => abrirEditar(i)}>Editar</button></td>
                   <td><button className="link-btn" onClick={() => toggleActivo(i)}>{i.activo ? 'Desactivar' : 'Activar'}</button></td>
                 </tr>
