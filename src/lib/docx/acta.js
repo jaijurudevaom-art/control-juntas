@@ -14,7 +14,7 @@ import {
 } from 'docx'
 import { buildHeader, buildFooter } from './helpers.js'
 import { COLORS, FONT } from './theme.js'
-import { fechaLarga, horaAmPm, numeroCompleto, tituloParaFrase } from '../formatFecha.js'
+import { fechaLarga, numeroCompleto, tituloParaFrase } from '../formatFecha.js'
 
 const thinBorder = { style: BorderStyle.SINGLE, size: 4, color: '999999' }
 const cellBorders = { top: thinBorder, bottom: thinBorder, left: thinBorder, right: thinBorder }
@@ -248,22 +248,6 @@ export async function generarActa({ junta, asistentes, puntos, acuerdos }) {
     } else if (p.desarrollo) {
       children.push(new Paragraph({ alignment: AlignmentType.JUSTIFIED, spacing: { after: 120 }, children: [new TextRun({ font: FONT, size: 22, text: p.desarrollo })] }))
     }
-  }
-
-  if (junta.hora_clausura) {
-    children.push(
-      new Paragraph({
-        alignment: AlignmentType.JUSTIFIED,
-        spacing: { before: 160, after: 300 },
-        children: [
-          new TextRun({
-            font: FONT,
-            size: 22,
-            text: `Se procede a la clausura de esta reunión ${tipoLabel.toLowerCase()}, siendo las ${horaAmPm(junta.hora_clausura)} horas del día ${fechaLarga(junta.fecha)}.`,
-          }),
-        ],
-      })
-    )
   }
 
   children.push(

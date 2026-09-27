@@ -2,10 +2,20 @@ import { useState } from 'react'
 import { supabase } from '../lib/supabaseClient'
 import { asignarConsecutivos } from '../lib/acuerdos'
 import { numeroCompleto } from '../lib/formatFecha'
+import { renderPlantilla } from '../lib/plantillas'
 
-function PuntoFijo({ punto, onChange }) {
+function PuntoFijo({ punto, junta, plantilla, onChange }) {
   const [desarrollo, setDesarrollo] = useState(punto.desarrollo || '')
   const [editando, setEditando] = useState(false)
+
+  function abrirEditar() {
+    if (!punto.desarrollo && plantilla) {
+      setDesarrollo(renderPlantilla(plantilla.texto, junta))
+    } else {
+      setDesarrollo(punto.desarrollo || '')
+    }
+    setEditando(true)
+  }
 
   async function guardar() {
     await supabase.from('jg_orden_dia_puntos').update({ desarrollo }).eq('id', punto.id)
@@ -19,7 +29,7 @@ function PuntoFijo({ punto, onChange }) {
       {editando ? (
         <div style={{ marginTop: 8 }}>
           <textarea
-            rows={2}
+            rows={4}
             placeholder="Qué se expuso/acordó en este punto (para el desarrollo del acta)…"
             value={desarrollo}
             onChange={(e) => setDesarrollo(e.target.value)}
@@ -32,7 +42,7 @@ function PuntoFijo({ punto, onChange }) {
       ) : (
         <div style={{ marginTop: 6 }}>
           {punto.desarrollo ? <p className="muted" style={{ margin: '4px 0' }}>{punto.desarrollo}</p> : null}
-          <button className="link-btn" onClick={() => setEditando(true)}>
+          <button className="link-btn" onClick={abrirEditar}>
             {punto.desarrollo ? 'Editar desarrollo' : '+ Agregar desarrollo para el acta'}
           </button>
         </div>
@@ -113,8 +123,9 @@ function AcuerdoItem({ acuerdo, juntaNumero, onChange }) {
   )
 }
 
-export default function OrdenDiaTab({ junta, puntos, acuerdos, onChange }) {
+export default function OrdenDiaTab({ junta, puntos, acuerdos, plantillas, onChange }) {
   const [nuevo, setNuevo] = useState({ numero_tema: '', titulo: '' })
+  const plantillaPorNumero = Object.fromEntries((plantillas || []).map((p) => [p.punto_numero, p]))
 
   const puntosAntes = puntos.filter((p) => p.numero < 5)
   const puntosDespues = puntos.filter((p) => p.numero > 5)
@@ -142,7 +153,9 @@ export default function OrdenDiaTab({ junta, puntos, acuerdos, onChange }) {
     <div>
       <div className="card">
         <h3 style={{ marginTop: 0 }}>Agenda fija</h3>
-        {puntosAntes.map((p) => <PuntoFijo key={p.id} punto={p} onChange={onChange} />)}
+        {puntosAntes.map((p) => (
+          <PuntoFijo key={p.id} punto={p} junta={junta} plantilla={plantillaPorNumero[p.numero]} onChange={onChange} />
+        ))}
       </div>
 
       <div className="card">
@@ -176,7 +189,9 @@ export default function OrdenDiaTab({ junta, puntos, acuerdos, onChange }) {
 
       <div className="card">
         <h3 style={{ marginTop: 0 }}>Cierre de agenda</h3>
-        {puntosDespues.map((p) => <PuntoFijo key={p.id} punto={p} onChange={onChange} />)}
+        {puntosDespues.map((p) => (
+          <PuntoFijo key={p.id} punto={p} junta={junta} plantilla={plantillaPorNumero[p.numero]} onChange={onChange} />
+        ))}
       </div>
     </div>
   )

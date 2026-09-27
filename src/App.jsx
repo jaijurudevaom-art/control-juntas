@@ -6,6 +6,7 @@ import Juntas from './pages/Juntas'
 import JuntaDetalle from './pages/JuntaDetalle'
 import Integrantes from './pages/Integrantes'
 import Buscador from './pages/Buscador'
+import Plantillas from './pages/Plantillas'
 
 export default function App() {
   const [session, setSession] = useState(undefined)
@@ -27,6 +28,7 @@ export default function App() {
           <NavLink to="/juntas" className={({ isActive }) => (isActive ? 'active' : '')}>Juntas</NavLink>
           <NavLink to="/buscador" className={({ isActive }) => (isActive ? 'active' : '')}>Buscar acuerdos</NavLink>
           <NavLink to="/integrantes" className={({ isActive }) => (isActive ? 'active' : '')}>Integrantes</NavLink>
+          <NavLink to="/plantillas" className={({ isActive }) => (isActive ? 'active' : '')}>Plantillas</NavLink>
         </nav>
         <button className="logout" onClick={() => supabase.auth.signOut()}>Cerrar sesión</button>
       </aside>
@@ -37,6 +39,7 @@ export default function App() {
           <Route path="/juntas/:id" element={<JuntaDetalle />} />
           <Route path="/buscador" element={<Buscador />} />
           <Route path="/integrantes" element={<Integrantes />} />
+          <Route path="/plantillas" element={<Plantillas />} />
         </Routes>
       </main>
     </div>

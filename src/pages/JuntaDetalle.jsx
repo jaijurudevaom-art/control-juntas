@@ -23,23 +23,26 @@ export default function JuntaDetalle() {
   const [acuerdos, setAcuerdos] = useState([])
   const [asistenciaIds, setAsistenciaIds] = useState([])
   const [documentos, setDocumentos] = useState([])
+  const [plantillas, setPlantillas] = useState([])
   const [tab, setTab] = useState('datos')
   const [loading, setLoading] = useState(true)
 
   const cargar = useCallback(async () => {
-    const [{ data: j }, { data: ints }, { data: pts }, { data: acs }, { data: asis }, { data: docs }] = await Promise.all([
+    const [{ data: j }, { data: ints }, { data: pts }, { data: acs }, { data: asis }, { data: docs }, { data: plts }] = await Promise.all([
       supabase.from('jg_juntas').select('*').eq('id', id).single(),
       supabase.from('jg_integrantes').select('*').eq('activo', true).order('orden'),
       supabase.from('jg_orden_dia_puntos').select('*').eq('junta_id', id).order('numero'),
       supabase.from('jg_acuerdos').select('*').eq('junta_id', id).order('orden'),
       supabase.from('jg_asistencia').select('integrante_id').eq('junta_id', id),
       supabase.from('jg_documentos').select('*').eq('junta_id', id).order('generado_en', { ascending: false }),
+      supabase.from('jg_plantillas_desarrollo').select('*'),
     ])
     setJunta(j)
     setIntegrantes(ints || [])
     setAcuerdos(acs || [])
     setAsistenciaIds((asis || []).map((a) => a.integrante_id))
     setDocumentos(docs || [])
+    setPlantillas(plts || [])
 
     if (!pts || pts.length === 0) {
       const inserts = PUNTOS_DEFAULT.map((p) => ({ ...p, junta_id: id }))
@@ -77,7 +80,9 @@ export default function JuntaDetalle() {
       </div>
 
       {tab === 'datos' && <DatosGeneralesTab junta={junta} onChange={cargar} />}
-      {tab === 'orden' && <OrdenDiaTab junta={junta} puntos={puntos} acuerdos={acuerdos} onChange={cargar} />}
+      {tab === 'orden' && (
+        <OrdenDiaTab junta={junta} puntos={puntos} acuerdos={acuerdos} plantillas={plantillas} onChange={cargar} />
+      )}
       {tab === 'asistencia' && (
         <AsistenciaTab juntaId={junta.id} integrantes={integrantes} asistenciaIds={asistenciaIds} onChange={cargar} />
       )}
