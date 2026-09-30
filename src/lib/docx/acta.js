@@ -93,7 +93,7 @@ function acuerdoBox(texto) {
 // acuerdos: jg_acuerdos[] (con desarrollo, numero_tema, titulo, retirado, consecutivo, anio, anexo_num)
 export async function generarActa({ junta, asistentes, puntos, acuerdos }) {
   const header = await buildHeader()
-  const footer = buildFooter()
+  const footer = await buildFooter()
   const tipoLabel = junta.tipo === 'ordinaria' ? 'Ordinaria' : 'Extraordinaria'
 
   const puntosAntes = puntos.filter((p) => p.numero < 5).sort((a, b) => a.numero - b.numero)

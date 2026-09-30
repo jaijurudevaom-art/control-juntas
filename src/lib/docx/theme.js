@@ -25,3 +25,4 @@ export const PAGE = {
 }
 
 export const LOGO_PATH = new URL('../../assets/letterhead/letterhead-banner.jpg', import.meta.url).href
+export const FOOTER_LOGO_PATH = new URL('../../assets/letterhead/letterhead-footer.jpg', import.meta.url).href

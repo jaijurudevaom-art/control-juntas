@@ -70,7 +70,7 @@ function oficioTable({ destinatarioNombre, destinatarioCargo, numeroOficio, anio
 // presidenta: {nombre, cargo}
 export async function generarConvocatoria({ junta, destinatarios, puntos, acuerdos, presidenta, fechaEmision }) {
   const header = await buildHeader()
-  const footer = buildFooter()
+  const footer = await buildFooter()
   const tipoLabel = junta.tipo === 'ordinaria' ? 'Ordinaria' : 'Extraordinaria'
   const asunto = `Reunión ${tipoLabel} No. ${junta.numero} de Consejo de Administración`
 

@@ -7,7 +7,7 @@ import { fechaLarga, horaAmPm } from '../formatFecha.js'
 // asistentes: array de jg_integrantes (nombre, cargo, representacion) que asistieron
 export async function generarListaAsistencia({ junta, asistentes }) {
   const header = await buildHeader()
-  const footer = buildFooter()
+  const footer = await buildFooter()
   const tipoLabel = junta.tipo === 'ordinaria' ? 'Ordinaria' : 'Extraordinaria'
 
   const children = [

@@ -1,14 +1,14 @@
 import { Document, Packer, Paragraph, TextRun, AlignmentType } from 'docx'
 import { buildHeader, buildFooter } from './helpers.js'
 import { FONT } from './theme.js'
-import { fechaLarga, horaAmPm } from '../formatFecha.js'
+import { fechaLarga, horaSinSegundos } from '../formatFecha.js'
 
 // junta: { numero, tipo, fecha, hora }
 // puntos: array de jg_orden_dia_puntos ordenados (numero, texto)
 // acuerdos: array de jg_acuerdos ordenados (numero_tema, titulo, retirado, motivo_retiro)
 export async function generarOrdenDelDia({ junta, puntos, acuerdos }) {
   const header = await buildHeader()
-  const footer = buildFooter()
+  const footer = await buildFooter()
 
   const tipoLabel = junta.tipo === 'ordinaria' ? 'Ordinaria' : 'Extraordinaria'
 
@@ -24,7 +24,7 @@ export async function generarOrdenDelDia({ junta, puntos, acuerdos }) {
           bold: true,
           font: FONT,
           size: 24,
-          text: `Reunión ${tipoLabel} No. ${junta.numero} del Consejo de Administración del Instituto de Servicio Médico para los Trabajadores de la Educación del Estado de Coahuila, celebrada a las ${horaAmPm(junta.hora)} horas del día ${fechaLarga(junta.fecha)}.`,
+          text: `Reunión ${tipoLabel} No. ${junta.numero} del Consejo de Administración del Instituto de Servicio Médico para los Trabajadores de la Educación del Estado de Coahuila, celebrada a las ${horaSinSegundos(junta.hora)} horas del día ${fechaLarga(junta.fecha)}.`,
         }),
       ],
     }),
@@ -40,6 +40,7 @@ export async function generarOrdenDelDia({ junta, puntos, acuerdos }) {
     children.push(
       new Paragraph({
         numbering: { reference: 'orden-dia-numeracion', level: 0 },
+        alignment: AlignmentType.JUSTIFIED,
         spacing: { after: 140 },
         children: [new TextRun({ font: FONT, size: 22, text: p.texto })],
       })
@@ -50,6 +51,7 @@ export async function generarOrdenDelDia({ junta, puntos, acuerdos }) {
   children.push(
     new Paragraph({
       numbering: { reference: 'orden-dia-numeracion', level: 0 },
+      alignment: AlignmentType.JUSTIFIED,
       spacing: { after: 140 },
       children: [new TextRun({ font: FONT, size: 22, text: 'Solicitud de acuerdos, presentación y en su caso aprobación de:' })],
     })
@@ -73,6 +75,7 @@ export async function generarOrdenDelDia({ junta, puntos, acuerdos }) {
     children.push(
       new Paragraph({
         indent: { left: 720 },
+        alignment: AlignmentType.JUSTIFIED,
         spacing: { after: 140 },
         children: runs,
       })
@@ -83,6 +86,7 @@ export async function generarOrdenDelDia({ junta, puntos, acuerdos }) {
     children.push(
       new Paragraph({
         numbering: { reference: 'orden-dia-numeracion', level: 0 },
+        alignment: AlignmentType.JUSTIFIED,
         spacing: { after: 140 },
         children: [new TextRun({ font: FONT, size: 22, text: p.texto })],
       })

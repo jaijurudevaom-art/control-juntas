@@ -27,6 +27,12 @@ export function diaSemana(iso) {
   return DIAS[d.getDay()]
 }
 
+// 'HH:MM:SS' (como lo regresa Postgres) -> 'HH:MM'
+export function horaSinSegundos(hhmmss) {
+  if (!hhmmss) return ''
+  return hhmmss.slice(0, 5)
+}
+
 export function horaAmPm(hhmm) {
   if (!hhmm) return ''
   const [h, m] = hhmm.split(':').map(Number)

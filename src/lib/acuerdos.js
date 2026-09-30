@@ -27,9 +27,9 @@ export async function asignarConsecutivos(juntaId, anio) {
 
 export const PUNTOS_DEFAULT = [
   { numero: 1, texto: 'Bienvenida a cargo de la Representante de la Presidenta del Consejo de Administración.' },
-  { numero: 2, texto: 'Pase de lista a cargo del Director General del Instituto y Secretario Técnico del Consejo de Administración.' },
-  { numero: 3, texto: 'Instalación Legal de la Asamblea.' },
-  { numero: 4, texto: 'Lectura del acta anterior.' },
-  { numero: 6, texto: 'Asuntos generales.' },
+  { numero: 2, texto: 'Pase de lista a cargo del Dr. Jorge Bill Soto Almaguer, Director General del Instituto y Secretario Técnico del Consejo de Administración.' },
+  { numero: 3, texto: 'Instalación Legal de la Asamblea a cargo de la Representante de la Presidenta del Consejo de Administración.' },
+  { numero: 4, texto: 'Lectura del acta anterior a cargo de la Representante de la Presidenta del Consejo de Administración.' },
+  { numero: 6, texto: 'Asuntos generales' },
   { numero: 7, texto: 'Clausura a cargo de la Representante de la Presidenta del Consejo de Administración.' },
 ]

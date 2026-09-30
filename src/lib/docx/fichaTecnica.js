@@ -7,7 +7,7 @@ import { fechaLarga, numeroCompleto, tituloParaFrase } from '../formatFecha.js'
 // acuerdo: {numero_tema, titulo, desarrollo, consecutivo, anio, anexo_num}
 export async function generarFichaTecnica({ junta, acuerdo }) {
   const header = await buildHeader()
-  const footer = buildFooter()
+  const footer = await buildFooter()
   const tipoLabel = junta.tipo === 'ordinaria' ? 'Ordinaria' : 'Extraordinaria'
   const numCompleto = numeroCompleto(acuerdo, junta.numero)
 
